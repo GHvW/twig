@@ -8,29 +8,15 @@ class Line {
 }
 
 
-class Point {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-  }
 
-  distanceTo(otherPoint) {
-    let x2MinusX1 = otherPoint.x - this.x;
-    let y2MinusY1 = otherPoint.y - this.y;
-    return Math.sqrt(Math.pow(x2MinusX1, 2) + Math.pow(y2MinusY1, 2));
-  }
-}
-
-
-// doesnt work yet
 const findIt = (points, distanceLeft) => {
   const point1 = points[0];
   const point2 = points[1];
   const segmentLength = point1.distanceTo(point2);
 
   if (segmentLength >= distanceLeft) {
-    const opposite = point1.y - point2.y;
-    const adjacent = point1.x - point2.x;
+    const opposite = point2.y - point1.y;
+    const adjacent = point2.x - point1.x;
     const radians = Math.atan(opposite / adjacent);
 
     const opposite_ = Math.sin(radians) * distanceLeft;
@@ -38,7 +24,7 @@ const findIt = (points, distanceLeft) => {
 
     return {
       x: point1.x + adjacent_,
-      y: point1.y - opposite_
+      y: point1.y + opposite_
     }
   }
 
@@ -50,7 +36,7 @@ const findIt = (points, distanceLeft) => {
 const points = [
   new Point(10, 100),
   new Point(35, 82),
-  new Point(80, 42)
+  new Point(150, 62)
 ];
 
 const totalDistance = points.reduce((total, point, index) => {
