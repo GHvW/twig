@@ -16,26 +16,28 @@ class Polyline {
     }, 0);
   }
 
-  midPoint(): number {
-    const reduceToMid = (path: Array<Point>, distanceLeft: number) => {
-      const point1 = points[0];
-      const point2 = points[1];
-      const segmentLength = point1.distanceTo(point2);
+  midPoint(): Point {
+    return this.reduceToMid(this.path, this.totalDistance() / 2);
+  }
 
-      if (segmentLength >= distanceLeft) {
-        const opposite = point2.y - point1.y;
-        const adjacent = point2.x = point1.x;
-        const radians = Math.abs(Math.atan(opposite / adjacent));
+  private reduceToMid(path: Array<Point>, distanceLeft: number): Point {
+    const point1 = path[0];
+    const point2 = path[1];
+    const segmentLength = point1.distanceTo(point2);
 
-        const oppositeOfDistanceRemaining = Math.sin(radians) * distanceLeft;
-        const adjacentOfDistanceRemaining = Math.cos(radians) * distanceLeft;
+    if (segmentLength >= distanceLeft) {
+      const opposite = point2.y - point1.y;
+      const adjacent = point2.x = point1.x;
+      const radians = Math.abs(Math.atan(opposite / adjacent));
 
-        return getPointFrom(point1, point1.quadrantWith(point2), oppositeOfDistanceRemaining, adjacentOfDistanceRemaining);
-      }
+      const oppositeOfDistanceRemaining = Math.sin(radians) * distanceLeft;
+      const adjacentOfDistanceRemaining = Math.cos(radians) * distanceLeft;
 
-      return reduceToMid(path.slice(1), distanceLeft - segmentLength);
+      return point1.getPointFrom(point1.quadrantOf(point2), oppositeOfDistanceRemaining, adjacentOfDistanceRemaining);
     }
 
-    return reduceToMid(this.path, this.totalDistance() / 2);
+    return this.reduceToMid(path.slice(1), distanceLeft - segmentLength);
   }
 }
+
+export default Polyline;
