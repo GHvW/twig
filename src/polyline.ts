@@ -1,47 +1,41 @@
-const Point = require("./point");
+import Point from "./point";
 
-class Line {
-  constructor(point1, point2) {
-    this.point1 = point1;
-    this.point2 = point2;
+class Polyline {
+  path: Array<Point>
+
+  constructor(path: Array<Point>) {
+    this.path = path;
   }
-}
 
+  totalDistance(): number {
+    return this.path.reduce((total, point, index, thisArray) => {
+      if (index + 1 >= thisArray.length) {
+        return total;
+      }
+      return total + point.distanceTo(thisArray[index + 1]);
+    }, 0);
+  }
 
+  midPoint(): number {
+    const reduceToMid = (path: Array<Point>, distanceLeft: number) => {
+      const point1 = points[0];
+      const point2 = points[1];
+      const segmentLength = point1.distanceTo(point2);
 
-const findIt = (points, distanceLeft) => {
-  const point1 = points[0];
-  const point2 = points[1];
-  const segmentLength = point1.distanceTo(point2);
+      if (segmentLength >= distanceLeft) {
+        const opposite = point2.y - point1.y;
+        const adjacent = point2.x = point1.x;
+        const radians = Math.abs(Math.atan(opposite / adjacent));
 
-  if (segmentLength >= distanceLeft) {
-    const opposite = point2.y - point1.y;
-    const adjacent = point2.x - point1.x;
-    const radians = Math.atan(opposite / adjacent);
+        const oppositeOfDistanceRemaining = Math.sin(radians) * distanceLeft;
+        const adjacentOfDistanceRemaining = Math.cos(radians) * distanceLeft;
 
-    const opposite_ = Math.sin(radians) * distanceLeft;
-    const adjacent_ = Math.cos(radians) * distanceLeft;
+        return getPointFrom(point1, point1.quadrantWith(point2), oppositeOfDistanceRemaining, adjacentOfDistanceRemaining);
+      }
 
-    return {
-      x: point1.x + adjacent_,
-      y: point1.y + opposite_
+      return reduceToMid(path.slice(1), distanceLeft - segmentLength);
     }
-  }
 
-  return findIt(points.slice(1), distanceLeft - segmentLength);
+    return reduceToMid(this.path, this.totalDistance() / 2);
+  }
 }
-
-
-
-const points = [
-  new Point(10, 100),
-  new Point(35, 82),
-  new Point(150, 62)
-];
-
-const totalDistance = points.reduce((total, point, index) => {
-  if (index + 1 >= points.length) {
-    return total;
-  }
-  return total + point.distanceTo(points[index + 1]);
-}, 0);

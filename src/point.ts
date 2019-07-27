@@ -7,10 +7,26 @@ class Point {
     this.y = y;
   }
 
-  distanceTo(otherPoint: Point): number {
+  distanceTo(other: Point): number {
     return Math.sqrt(
-      Math.pow(otherPoint.x - this.x, 2) + Math.pow(otherPoint.y - this.y, 2)
+      Math.pow(other.x - this.x, 2) + Math.pow(other.y - this.y, 2)
     );
+  }
+
+  quadrantWith(other: Point): number {
+    if (other.x >= this.x && other.y >= this.y) {
+      return 1;
+    } else if (other.x <= this.x && other.y > this.y) {
+      return 2;
+    } else if (other.x < this.x && other.y <= this.y) {
+      return 3;
+    } else {
+      return 4
+    }
+  }
+
+  getPointFrom(quadrant: number, opposite: number, adjacent: number): Point {
+
   }
 }
 
