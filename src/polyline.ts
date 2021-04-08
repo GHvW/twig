@@ -1,4 +1,4 @@
-import { IPoint, distance, directionRelativeToOrigin, translatePoint } from "./point";
+import { IPoint, distance, generateDirection, translatePoint } from "./point";
 
 export type Polyline = Array<IPoint>;
 
@@ -8,7 +8,7 @@ function totalDistance(line: Polyline): number {
     if (index + 1 >= line.length) {
       return total;
     }
-    return total + distance({ p1: point, p2: line[index + 1]});
+    return total + distance(point, line[index + 1]);
   }, 0); 
 }
 
@@ -16,7 +16,7 @@ function totalDistance(line: Polyline): number {
 function reduceToMid(distanceLeft: number, path: Polyline): IPoint {
   const point1 = path[0];
   const point2 = path[1];
-  const segmentLength = distance({ p1: point1, p2: point2});
+  const segmentLength = distance(point1, point2);
 
   if (segmentLength >= distanceLeft) {
     const opposite = point2.y - point1.y;
@@ -26,7 +26,7 @@ function reduceToMid(distanceLeft: number, path: Polyline): IPoint {
     const oppositeOfDistanceRemaining = Math.sin(radians) * distanceLeft;
     const adjacentOfDistanceRemaining = Math.cos(radians) * distanceLeft;
 
-    return translatePoint(directionRelativeToOrigin({ p1: point1, p2: point2 }), 
+    return translatePoint(generateDirection(point1, point2), 
                           [adjacentOfDistanceRemaining, oppositeOfDistanceRemaining], 
                           point1);
   }

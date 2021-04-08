@@ -14,22 +14,17 @@ export interface IPoint {
   y: number;
 }
 
-export interface ILine {
-    p1: IPoint;
-    p2: IPoint;
-}
-
 
 export type Vector = [x: number, y: number];
 
 
-export function distance({ p1, p2 }: ILine): number {
+export function distance(p1: IPoint, p2: IPoint): number {
     return Math.sqrt(
       Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2)
     );
 }
 
-export function directionRelativeToOrigin({ p1, p2 }: ILine): Quadrant {
+export function generateDirection(p1: IPoint, p2: IPoint): Quadrant {
     if (p2.x >= p1.x && p2.y >= p1.y) {
       return 1;
     } else if (p2.x <= p1.x && p2.y > p1.y) {
