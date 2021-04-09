@@ -1,5 +1,6 @@
 import { IPoint, distance, generateDirection, translatePoint } from "./point";
 
+
 export type Polyline = Array<IPoint>;
 
 
