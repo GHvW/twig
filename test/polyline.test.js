@@ -9,11 +9,11 @@ const polyline = [
 
 describe("given a polyline", () => {
 
-    test("when the entire line is on the axis, finding a midpoint returns a point approximately on the axis", () => {
-        const midpoint = findMidpoint(polyline);
-        expect(midpoint.x.toFixed(4)).toBe("0.0000");
-        expect(midpoint.y.toFixed(4)).toBe("5.0000");
-    });
+    // test("when the entire line is on the axis, finding a midpoint returns a point approximately on the axis", () => {
+    //     const midpoint = findMidpoint(polyline);
+    //     expect(midpoint.x.toFixed(4)).toBe("0.0000");
+    //     expect(midpoint.y.toFixed(4)).toBe("5.0000");
+    // });
 
 
     test("when the line is straight, total distance returns the legnth of the entire polyline", () => {
@@ -50,96 +50,85 @@ describe("given a polyline", () => {
     });
 
     test("it", () => {
+        // const midpoint = findMidpoint(polyline);
+        // expect(midpoint.x.toFixed(4)).toBe("0.0000");
+        // expect(midpoint.y.toFixed(4)).toBe("5.0000");
         const first = [
-            { x: 0.0, y: 0.0 }, 
-            { x: 2.0, y: 3.0 }, 
-            { x: 10.0, y: 8.0 }, 
-            { x: 13.0, y: 11.0 }
+            { x: 0, y: 0 }, 
+            { x: 2, y: 3 }, 
+            { x: 10, y: 8 }, 
+            { x: 13, y: 11 }
         ]; 
         const expected = { x: 6.27, y: 5.67 }; // QI
-        const test = [
-            { x: 0, y: 0},
-            { x: 10, y: 0}
-        ];
 
-        const mid = findMidpoint(test);
+
+        const mid = findMidpoint(first);
         
-        expect(mid.x).toBe(expected.x);
-        expect(mid.y).toBe(expected.y);
+        expect(mid.x.toFixed(2)).toBe(expected.x.toString());
+        expect(mid.y.toFixed(2)).toBe(expected.y.toString());
     });
     
-    // describe("when the line can switch direction", () => {
+    describe("where the line can switch direction", () => {
 
+        test("midpoint is found when the line stays in the same direction", () => {
+            const first = [
+                { x: 0.0, y: 0.0 }, 
+                { x: 2.0, y: 3.0 }, 
+                { x: 10.0, y: 8.0 }, 
+                { x: 13.0, y: 11.0 }
+            ]; 
+            const expected = { x: 6.27, y: 5.67 }; // QI
 
-    //     const second = [ 
-    //         { x: 0.0, y: 0.0 }, 
-    //         { x: 2.0, y: 3.0 }, 
-    //         { x: -4.0, y: 8.0 }, 
-    //         { x: -7.0, y: 11.0 } 
-    //     ]; 
-    //     const secondExpected = { x: -1.24, y: 5.70 }; // QII
-    //     const third = [ 
-    //         { x: 0.0, y: 0.0 }, 
-    //         { x: 2.0, y: 3.0 }, 
-    //         { x: -4.0, y: -3.0 }, 
-    //         { x: -7.0, y: -6.0 }
-    //     ]; 
-    //     const thirdExpected = { x: -1.23, y: -0.23 }; // QIII
-    //     const fourth = [
-    //         { x: 0.0, y: 0.0 }, 
-    //         { x: 2.0, y: 3.0 },
-    //         { x: 10.0, y: -3.0 }, 
-    //         { x: 13.0, y: -6.0 }, 
+            const mid = findMidpoint(first);
             
-    //     ]; 
-    //     const fourthExpected = { x: 6.25, y: -0.19 }; // QIV
+            expect(mid.x.toFixed(2)).toBe(expected.x.toString());
+            expect(mid.y.toFixed(2)).toBe(expected.y.toString());
+        });
 
-    //     test("midpoint is found if the line stays straight", () => {
-    //         const first = [
-    //             { x: 0.0, y: 0.0 }, 
-    //             { x: 2.0, y: 3.0 }, 
-    //             { x: 10.0, y: 8.0 }, 
-    //             { x: 13.0, y: 11.0 }
-    //         ]; 
-    //         const expected = { x: 6.27, y: 5.67 }; // QI
-    //         const test = [
-    //             { x: 0, y: 0},
-    //             { x: 10, y: 0}
-    //         ];
+        test("midpoint is found when the line shifts from quadrant I to quadrant II", () => {
+            const second = [ 
+                { x: 0.0, y: 0.0 }, 
+                { x: 2.0, y: 3.0 }, 
+                { x: -4.0, y: 8.0 }, 
+                { x: -7.0, y: 11.0 } 
+            ]; 
+            const expected = { x: -1.24, y: 5.70 }; // QII
 
-    //         const mid = findMidpoint(test);
+            const mid = findMidpoint(second);
             
-    //         expect(mid.x).toBe(expected.x);
-    //         expect(mid.y).toBe(expected.y);
-    //     })
-        // test("then the midpoint is accurate despite the switch in direction", () => {
+            expect(mid.x.toFixed(2)).toBe(expected.x.toFixed(2));
+            expect(mid.y.toFixed(2)).toBe(expected.y.toFixed(2));
+        });
 
-        //     [first, second, third, fourth]
-        //     // [polyline]
-        //         .forEach((it, index) => {
-        //             console.log("it ", it);
-        //             console.log(index);
-        //             const mid = findMidpoint(it);
-        //             console.log("mid", mid);
-        //             switch (index) {
-        //                 case 0:
-        //                     expect(mid.x).toBe(firstExpected.x);
-        //                     expect(mid.y).toBe(firstExpected.y);
-        //                     break;
-        //                 case 1:
-        //                     expect(mid.x).toBe(secondExpected.x);
-        //                     expect(mid.y).toBe(secondExpected.y);
-        //                     break;
-        //                 case 2:
-        //                     expect(mid.x).toBe(thirdExpected.x);
-        //                     expect(mid.y).toBe(thirdExpected.y);
-        //                     break;
-        //                 case 3:
-        //                     expect(mid.x).toBe(fourthExpected.x);
-        //                     expect(mid.y).toBe(fourthExpected.y);
-        //                     break;
-        //             }
-        //         });
-        // });
-    // })
+        test("midpoint is found when the line shifts from quadrant I to quadrant III", () => {
+            const third = [ 
+                { x: 0.0, y: 0.0 }, 
+                { x: 2.0, y: 3.0 }, 
+                { x: -4.0, y: -3.0 }, 
+                { x: -7.0, y: -6.0 }
+            ]; 
+            const expected = { x: -1.23, y: -0.23 }; // QIII
+
+            const mid = findMidpoint(third);
+            
+            expect(mid.x.toFixed(2)).toBe(expected.x.toString());
+            expect(mid.y.toFixed(2)).toBe(expected.y.toString());
+        });
+
+        test("midpoint is found when the line shifts from quadrant I to quadrant IV", () => {
+            const fourth = [
+                { x: 0.0, y: 0.0 }, 
+                { x: 2.0, y: 3.0 },
+                { x: 10.0, y: -3.0 }, 
+                { x: 13.0, y: -6.0 }, 
+                
+            ]; 
+            const expected = { x: 6.25, y: -0.19 }; // QIV
+
+            const mid = findMidpoint(fourth);
+            
+            expect(mid.x.toFixed(2)).toBe(expected.x.toString());
+            expect(mid.y.toFixed(2)).toBe(expected.y.toString());
+        });
+    });
 });
