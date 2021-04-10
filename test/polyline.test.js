@@ -1,20 +1,6 @@
 const { findMidpoint, totalDistance } = require("../dist/polyline.js");
 
-const polyline = [
-    { x: 0, y: -10 },
-    { x: 0, y: 0 },
-    { x: 0, y: 10 },
-    { x: 0, y: 20 }
-];
-
 describe("given a polyline", () => {
-
-    // test("when the entire line is on the axis, finding a midpoint returns a point approximately on the axis", () => {
-    //     const midpoint = findMidpoint(polyline);
-    //     expect(midpoint.x.toFixed(4)).toBe("0.0000");
-    //     expect(midpoint.y.toFixed(4)).toBe("5.0000");
-    // });
-
 
     test("when the line is straight, total distance returns the legnth of the entire polyline", () => {
         const line1 = [
@@ -49,23 +35,32 @@ describe("given a polyline", () => {
         expect(totalDistance(test)).toBe(10);
     });
 
-    test("it", () => {
-        // const midpoint = findMidpoint(polyline);
-        // expect(midpoint.x.toFixed(4)).toBe("0.0000");
-        // expect(midpoint.y.toFixed(4)).toBe("5.0000");
-        const first = [
-            { x: 0, y: 0 }, 
-            { x: 2, y: 3 }, 
-            { x: 10, y: 8 }, 
-            { x: 13, y: 11 }
-        ]; 
-        const expected = { x: 6.27, y: 5.67 }; // QI
 
+    test("when the entire line is on the axis, finding a midpoint returns a point approximately on the axis", () => {
+        const polyline = [
+            { x: 0, y: -10 },
+            { x: 0, y: 0 },
+            { x: 0, y: 10 },
+            { x: 0, y: 20 }
+        ];
+        const midpoint = findMidpoint(polyline);
 
-        const mid = findMidpoint(first);
-        
-        expect(mid.x.toFixed(2)).toBe(expected.x.toString());
-        expect(mid.y.toFixed(2)).toBe(expected.y.toString());
+        expect(midpoint.x.toFixed(4)).toBe("0.0000");
+        expect(midpoint.y.toFixed(4)).toBe("5.0000");
+    });
+
+    test("easy polyline", () => {
+        const line = [
+            { x: 0, y: 0 },
+            { x: 10, y: 10 },
+            { x: 20, y: 20 },
+            { x: 30, y: 30 }
+        ];
+
+        const mid = findMidpoint(line);
+
+        expect(mid.x).toBe(15);
+        expect(mid.y).toBe(15);
     });
     
     describe("where the line can switch direction", () => {
