@@ -1,4 +1,5 @@
-const { findMidpoint, totalDistance } = require("../dist/polyline.js");
+import { test, expect, describe } from "vitest";
+import { totalDistance, findMidpoint } from "../src/path";
 
 describe("given a polyline", () => {
 
