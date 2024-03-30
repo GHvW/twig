@@ -1,5 +1,5 @@
 import { test, expect, describe } from "vitest";
-import { totalDistance, findMidpoint } from "../src/polyline";
+import { totalDistance, findMidpoint } from "../src/path";
 
 describe("given a polyline", () => {
 
